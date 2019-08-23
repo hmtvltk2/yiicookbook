@@ -1,0 +1,129 @@
+[
+    {
+        "code": "start",
+        "name": "Task 1",
+        "type": "start",
+        "condition": "",
+        "view": "customer/start-view",
+        "nexts": [
+            "n1"
+        ]
+    },
+    {
+        "code": "n1",
+        "name": "task2",
+        "type": "task",
+        "condition": "",
+        "view": "view_task_n1",
+        "nexts": [
+            "n2"
+        ],
+        "assignType": "owner"
+    },
+    {
+        "code": "n2",
+        "type": "exclusive",
+        "condition": "condition_n2",
+        "view": "",
+        "nexts": [
+            "n3",
+            "n4"
+        ]
+    },
+    {
+        "code": "n3",
+        "name": "Task 3",
+        "type": "task",
+        "condition": "",
+        "view": "view_task_n3",
+        "nexts": [
+            "n2"
+        ],
+        "prevConditionResult": false,
+        "assignee": "user",
+        "assignValue": "1"
+    },
+    {
+        "code": "n4",
+        "name": "Task 4",
+        "type": "task",
+        "condition": "",
+        "view": "view_task_n4",
+        "nexts": [
+            "n5"
+        ],
+        "prevConditionResult": true,
+        "assignType": "group",
+        "assignValue": "1"
+    },
+    {
+        "code": "n5",
+        "type": "parallel",
+        "condition": "",
+        "view": "",
+        "nexts": [
+            "n6",
+            "n7",
+            "n8"
+        ]
+    },
+    {
+        "code": "n6",
+        "name": "Task 5",
+        "type": "task",
+        "condition": "",
+        "view": "view_task_n6",
+        "nexts": [
+            "n9"
+        ],
+        "assignType": "permission",
+        "assignValue": "edit_task_n6"
+    },
+    {
+        "code": "n7",
+        "name": "Task 6",
+        "type": "task",
+        "condition": "",
+        "view": "view_task_n7",
+        "nexts": [
+            "n10"
+        ]
+    },
+    {
+        "code": "n8",
+        "name": "Task 7",
+        "type": "task",
+        "condition": "",
+        "view": "view_task_n8",
+        "nexts": [
+            "n10"
+        ]
+    },
+    {
+        "code": "n9",
+        "type": "task",
+        "name": "Task 8",
+        "condition": "",
+        "view": "view_task_n9",
+        "nexts": [
+            "n10"
+        ]
+    },
+    {
+        "code": "n10",
+        "type": "parallel",
+        "condition": "",
+        "view": "",
+        "nexts": [
+            "n11"
+        ]
+    },
+    {
+        "code": "n11",
+        "name": "Task 9",
+        "type": "task",
+        "condition": "",
+        "view": "view_task_n11",
+        "nexts": []
+    }
+]

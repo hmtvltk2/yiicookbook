@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use contrib\widgets\DateRangeWidget;
@@ -111,75 +109,38 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <script>
     $(function() {
-        const url = '<?= Url::to(['datatable']) ?>';
-        const formSelector = 'form';
-        let table = $('#table1').DataTable({
-            responsive: true,
-            dom: `<'row'<'col-sm-12'tr>>
-			<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-            searchDelay: 500,
-            processing: true,
-            serverSide: true,
-            order: [],
-            buttons: [
-                'print',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5'
-            ],
-            ajax: {
-                url: url,
-                data: function(data) {
-                    return dtParseRequest(data, formSelector);
-                }
-            },
-            columns: [{
-                    data: 'id'
-                },
-                {
-                    data: 'name'
-                },
-                {
-                    data: 'email'
-                },
-                {
-                    data: 'address'
-                },
-                {
-                    data: 'created_at'
-                },
-                {
-                    data: null,
-                    responsivePriority: -1,
-                },
-            ],
-            columnDefs: [{
-                    targets: -1,
-                    orderable: false,
-                    render: function(data, type, full, meta) {
-                        return `
-                        <div class="text-nowrap">
-                            <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="view?id=${data.id}" title="View">
-                                <i class="la la-eye"></i>
-                            </a>
-
-                            <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="update?id=${data.id}" title="Update">
-                                <i class="la la-edit"></i>
-                            </a>
-                            <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="delete?id=${data.id}" title="Delete" data-confirm="Are you sure you want to delete this item?" data-method="post">
-                                <i class="la la-trash-o"></i>
-                            </a>
-                        </div>
-                        `;
+        var table = createDataTable({
+            tableSelector: '#table1',
+            formSelector: 'form',
+            tableUrl: '<?= Url::to(['datatable']) ?>',
+            viewUrl: '<?= Url::to(['view']) ?>',
+            updateUrl: '<?= Url::to(['update']) ?>',
+            deleteUrl: '<?= Url::to(['delete']) ?>',
+            customConfig: {
+                columns: [{
+                        data: 'id'
                     },
-                },
-
-            ],
+                    {
+                        data: 'name'
+                    },
+                    {
+                        data: 'email'
+                    },
+                    {
+                        data: 'address'
+                    },
+                    {
+                        data: 'created_at',
+                        render: dtRenderDate
+                    },
+                    {
+                        data: null,
+                        responsivePriority: -1,
+                    },
+                ],
+            }
         });
 
-        dtRegisterButtonsEvent(table);
-        dtRegisterSearchEvent(formSelector, table);
     })
 </script>
 <?php $this->endBlock(); ?>

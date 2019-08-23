@@ -11,6 +11,7 @@ return array(
     'yii\\debug\\' => array($vendorDir . '/yiisoft/yii2-debug/src'),
     'yii\\composer\\' => array($vendorDir . '/yiisoft/yii2-composer'),
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
+    'mdm\\admin\\' => array($vendorDir . '/hmtvltk2/yii2-admin'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'Symfony\\Polyfill\\Php72\\' => array($vendorDir . '/symfony/polyfill-php72'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),

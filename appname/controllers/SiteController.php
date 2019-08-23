@@ -9,9 +9,12 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use appname\models\LoginForm;
 use appname\models\ContactForm;
+use appname\models\Log;
+use contrib\workflow\models\Flow;
+use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     public $layout = '@app/layout/main';
     /**
@@ -63,10 +66,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        Yii::info('example info',  static::class);
-        Yii::error('example error',  static::class);
-        Yii::warning('example warning',  static::class);
+
         return $this->render('index');
+    }
+
+    public function actionShowActivities()
+    {
+        $activities = Log::find()
+            ->where(['category' => 'userWrite'])
+            ->orderBy(['log_time' => SORT_DESC])
+            ->asArray()
+            ->all();
+        return $this->render('show-activities', compact('activities'));
     }
 
     /**
@@ -130,4 +141,9 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+}
+function rutime($ru, $rus, $index)
+{
+    return ($ru["ru_$index.tv_sec"] * 1000 + intval($ru["ru_$index.tv_usec"] / 1000))
+        - ($rus["ru_$index.tv_sec"] * 1000 + intval($rus["ru_$index.tv_usec"] / 1000));
 }

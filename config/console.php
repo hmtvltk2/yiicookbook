@@ -23,9 +23,18 @@ $config = [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\DbTarget',
+                    'levels' => ['info'],
+                    'categories' => ['userWrite', 'userRead'],
+                    'logVars' => ['_GET', '_POST'],
+                ],
             ],
         ],
         'db' => $db,
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ]
     ],
     'params' => $params,
     /*

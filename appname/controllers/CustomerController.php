@@ -5,14 +5,16 @@ namespace appname\controllers;
 use Yii;
 use appname\models\Customer;
 use appname\models\CustomerSearch;
+use contrib\workflow\models\Flow;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
  */
-class CustomerController extends Controller
+class CustomerController extends BaseController
 {
     public $layout = '@app/layout/main';
     /**
@@ -57,6 +59,28 @@ class CustomerController extends Controller
         return $this->asJson($data);
     }
 
+    public function actionStartView($flowId)
+    {
+        if (Yii::$app->request->isPost) {
+            $flow = $this->getFlow($flowId);
+            $flow->completeStart(Yii::$app->user->id);
+            return $this->redirect(['workflow/index']);
+        }
+
+        return $this->render('start-view');
+    }
+
+    public function actionViewTask1($flowId, $taskId)
+    {
+        if (Yii::$app->request->isPost) {
+            $flow = $this->getFlow($flowId);
+            $flow->completeTask($taskId, Yii::$app->user->id);
+            return $this->redirect(['workflow/tasks']);
+        }
+
+        return $this->render('view-task1');
+    }
+
     /**
      * Displays a single Customer model.
      * @param integer $id
@@ -65,6 +89,7 @@ class CustomerController extends Controller
      */
     public function actionView($id)
     {
+        $this->logUserRead("Xem chi tiết khách hàng #$id");
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -100,6 +125,7 @@ class CustomerController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->logUserWrite("Cập nhật thông tin khách hàng #$id");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -136,5 +162,14 @@ class CustomerController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    private function getFlow($flowId)
+    {
+        $session = Yii::$app->session;
+        if (!$session->has('flow')) {
+            $session['flow'] = Flow::createFlow($flowId);
+        }
+        return $session['flow'];
     }
 }

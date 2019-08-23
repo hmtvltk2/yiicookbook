@@ -57,3 +57,76 @@ function dtRegisterSearchEvent(selector, table) {
         table.ajax.reload();
     })
 }
+
+function dtRenderDate(data, type, row) {
+    if (!window.moment) {
+        console.warn('moment.js is not loaded');
+        return data;
+    }
+    return moment(data).format('DD/MM/YYYY');
+}
+
+function createDataTable(params) {
+    loadDefault();
+    const { tableSelector, tableUrl, formSelector, viewUrl, updateUrl, deleteUrl, customConfig } = params;
+    let config = {
+        ajax: {
+            url: tableUrl,
+            data: function (data) {
+                return dtParseRequest(data, formSelector);
+            }
+        },
+        columnDefs: [
+            {
+                targets: -1,
+                orderable: false,
+                render: function (data, type, full, meta) {
+                    return `
+                    <div class="text-nowrap">
+                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="${viewUrl}?id=${data.id}" title="Xem">
+                            <i class="la la-eye"></i>
+                        </a>
+
+                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="${updateUrl}?id=${data.id}" title="Cập nhật">
+                            <i class="la la-edit"></i>
+                        </a>
+                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="${deleteUrl}?id=${data.id}" title="Xóa" data-confirm="Bạn chắc chắn muốn xóa?" data-method="post">
+                            <i class="la la-trash-o"></i>
+                        </a>
+                    </div>
+                    `;
+                },
+            },
+            {
+                targets: '_all',
+                render: $.fn.dataTable.render.text()
+            }
+        ],
+    };
+
+    Object.assign(config, customConfig);
+    let table = $(tableSelector).DataTable(config);
+    dtRegisterButtonsEvent(table);
+    dtRegisterSearchEvent(formSelector, table);
+
+    return table;
+}
+
+function loadDefault() {
+    $.extend(true, $.fn.dataTable.defaults, {
+        responsive: true,
+        dom: `<'row'<'col-sm-12'tr>>
+        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+        searchDelay: 500,
+        processing: true,
+        serverSide: true,
+        order: [],
+        buttons: [
+            'print',
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ],
+    });
+}

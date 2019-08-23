@@ -2,11 +2,15 @@
 
 /* @var $this yii\web\View */
 
+use mdm\admin\components\MenuHelper;
+use yii\helpers\Html;
+use yii\helpers\Json;
 
+$sideMenuId = 1;
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
-
+    <?= Json::htmlEncode(MenuHelper::getAssignedMenu(Yii::$app->user->id, $sideMenuId)); ?>
     <div class="jumbotron">
         <h1>Congratulations!</h1>
 

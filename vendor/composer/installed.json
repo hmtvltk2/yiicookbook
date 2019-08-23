@@ -322,6 +322,63 @@
         ]
     },
     {
+        "name": "hmtvltk2/yii2-admin",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "F:\\Yii2\\yii2-admin",
+            "reference": "c695c4008a667752d1fca87e1c3c55cc24d87929"
+        },
+        "require": {
+            "yiisoft/yii2": "~2.0.7"
+        },
+        "require-dev": {
+            "yiisoft/yii2-codeception": "~2.0"
+        },
+        "suggest": {
+            "yiisoft/yii2-bootstrap": "Used when using layout 'left-menu', 'right-menu' or 'top-menu'"
+        },
+        "time": "2019-08-22T01:27:20+00:00",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-1.0.master": "1.0.x-dev",
+                "dev-master": "2.x-dev"
+            },
+            "asset-installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "mdm\\admin\\": ""
+            }
+        },
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Misbahul Munir",
+                "email": "misbahuldmunir@gmail.com"
+            }
+        ],
+        "description": "RBAC Auth manager for Yii2 ",
+        "keywords": [
+            "admin",
+            "auth",
+            "rbac",
+            "yii"
+        ],
+        "support": {
+            "issues": "https://github.com/mdmsoft/yii2-admin/issues",
+            "source": "https://github.com/mdmsoft/yii2-admin"
+        }
+    },
+    {
         "name": "opis/closure",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -738,12 +795,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-framework.git",
-            "reference": "f780764487e7fb7231d24e2bac4c33c8a0931abe"
+            "reference": "b0150e72ae638a31713a9d0dc68a802f36094f60"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f780764487e7fb7231d24e2bac4c33c8a0931abe",
-            "reference": "f780764487e7fb7231d24e2bac4c33c8a0931abe",
+            "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/b0150e72ae638a31713a9d0dc68a802f36094f60",
+            "reference": "b0150e72ae638a31713a9d0dc68a802f36094f60",
             "shasum": ""
         },
         "require": {
@@ -759,7 +816,7 @@
             "php": ">=5.4.0",
             "yiisoft/yii2-composer": "~2.0.4"
         },
-        "time": "2019-08-13T20:05:01+00:00",
+        "time": "2019-08-21T08:56:20+00:00",
         "bin": [
             "yii"
         ],
@@ -769,7 +826,7 @@
                 "dev-master": "2.0.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "yii\\": ""
@@ -892,17 +949,17 @@
     },
     {
         "name": "yiisoft/yii2-debug",
-        "version": "2.1.7",
-        "version_normalized": "2.1.7.0",
+        "version": "2.1.8",
+        "version_normalized": "2.1.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-debug.git",
-            "reference": "c54717af9172cf6233fea3eec113c0e0293e2bb2"
+            "reference": "959bf8206a3ec64f8949f62024a2c58d9a02e78f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/c54717af9172cf6233fea3eec113c0e0293e2bb2",
-            "reference": "c54717af9172cf6233fea3eec113c0e0293e2bb2",
+            "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/959bf8206a3ec64f8949f62024a2c58d9a02e78f",
+            "reference": "959bf8206a3ec64f8949f62024a2c58d9a02e78f",
             "shasum": ""
         },
         "require": {
@@ -916,7 +973,7 @@
             "yiisoft/yii2-coding-standards": "~2.0",
             "yiisoft/yii2-swiftmailer": "*"
         },
-        "time": "2019-07-30T12:40:16+00:00",
+        "time": "2019-08-20T15:19:56+00:00",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {

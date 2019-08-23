@@ -2,8 +2,8 @@
 
 namespace appname\models;
 
-use contrib\components\ActiveRecord;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "customer".
