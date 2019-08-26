@@ -2,11 +2,13 @@
 
 namespace contrib\workflow\models;
 
+use contrib\workflow\Constant;
 use contrib\workflow\Helper;
 use Yii;
 
 class Node
 {
+    public $flowDeninitionId;
     public $name;
     public $code;
     public $type;
@@ -18,70 +20,35 @@ class Node
     public $previous = [];
     public $nexts = [];
 
-    const TASK = 'task';
-    const START = 'start';
-    const EXCLUSIVE = 'exclusive';
-    const PARALLEL = 'parallel';
-    const ASSIGN_OWNER = 'owner';
-    const ASSIGN_USER = 'user';
-    const ASSIGN_GROUP = 'group';
-    const ASSIGN_PERMISSION = 'permission';
-
     public function createTask($processId)
     {
         $task = new Task();
         $task->process_id = $processId;
+        $task->flow_id = $this->flowDeninitionId;
         $task->name = $this->name;
+        $task->view = $this->view;
         $task->completed = false;
         $task->created_at = Helper::now();
         $task->node_code = $this->code;
         switch ($this->assignType) {
-            case static::ASSIGN_OWNER:
+            case Constant::ASSIGN_OWNER:
                 $process = $this->getProcess($processId);
                 $task->assignee = $process->created_by;
                 break;
-            case static::ASSIGN_USER:
+            case Constant::ASSIGN_USER:
                 $task->assignee = $this->assignValue;
                 break;
-            case static::ASSIGN_GROUP:
+            case Constant::ASSIGN_GROUP:
                 $task->group = $this->assignValue;
                 break;
-            case static::ASSIGN_PERMISSION:
+            case Constant::ASSIGN_PERMISSION:
                 $task->permission = $this->assignValue;
                 break;
         }
+        Yii::info($task->group, 'DEBUGLOG');
+        Yii::info($this->assignType, 'DEBUGLOG');
         $task->save();
         return $task;
-    }
-
-    public function next($processId)
-    {
-        if (count($this->nexts) == 0) {
-            return;
-        }
-
-        foreach ($this->nexts as $node) {
-            Yii::trace($node);
-            switch ($node->type) {
-                case static::TASK:
-                    // create task
-                    $node->createTask($processId);
-                    break;
-                case static::EXCLUSIVE:
-                    $result = call_user_func($node->condition);
-                    foreach ($node->nexts as $next) {
-                        if ($next->prevConditionResult == $result) {
-                            $next->next();
-                        }
-                    }
-                    break;
-                case static::PARALLEL:
-
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     private function getProcess($id)
@@ -90,6 +57,6 @@ class Node
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('The process does not exist.');
     }
 }

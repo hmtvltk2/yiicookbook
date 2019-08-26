@@ -3,10 +3,8 @@
 namespace appname\controllers;
 
 use Yii;
-use appname\models\Customer;
 use appname\models\CustomerSearch;
-use contrib\workflow\models\Flow;
-use contrib\workflow\models\FlowDefinition;
+
 use contrib\workflow\models\Task;
 use contrib\workflow\WorkflowService;
 use yii\web\Controller;
@@ -40,26 +38,39 @@ class WorkflowController extends BaseController
      */
     public function actionIndex()
     {
-        $models = FlowDefinition::find()->all();
+        $models = WorkflowService::getFlows();
         return $this->render('index', compact('models'));
     }
 
     public function actionStart($id)
     {
-        $flow = Flow::createFlow($id);
+        $flow = WorkflowService::createFlow($id);
         Yii::$app->session['flow'] = $flow;
-        $startView = $flow->getStartView();
-        return $this->redirect([$startView, 'flowId' => $id]);
+        $task = $flow->createFirstTask(Yii::$app->user->id);
+        if ($task) {
+            return $this->redirect([$task->view, 'taskId' => $task->id]);
+        } else {
+            return $this->redirect('index');
+        }
     }
 
     public function actionTasks()
     {
-        $tasks = WorkflowService::getTaskOfUser(Yii::$app->user->id)->all();
+        $tasks = WorkflowService::getTaskOfUser(Yii::$app->user->id);
         return $this->render('tasks', compact('tasks'));
     }
 
+    public function actionProcesses()
+    {
+        $processes = WorkflowService::getProcesses();
+        return $this->render('processes', compact('processes'));
+    }
+
     public function actionExecuteTask($taskId)
-    { }
+    {
+        $task = Task::findOne(['id' => $taskId]);
+        return $this->redirect([$task->view, 'taskId' => $taskId]);
+    }
 
     public function actionDatatable()
     {

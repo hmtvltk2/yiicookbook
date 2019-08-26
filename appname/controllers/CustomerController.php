@@ -70,15 +70,15 @@ class CustomerController extends BaseController
         return $this->render('start-view');
     }
 
-    public function actionViewTask1($flowId, $taskId)
+    public function actionViewTask1($taskId)
     {
         if (Yii::$app->request->isPost) {
-            $flow = $this->getFlow($flowId);
+            $flow = $this->getFlowByTaskId($taskId);
             $flow->completeTask($taskId, Yii::$app->user->id);
             return $this->redirect(['workflow/tasks']);
         }
 
-        return $this->render('view-task1');
+        return $this->render('view-task1', compact('taskId'));
     }
 
     /**
@@ -162,6 +162,12 @@ class CustomerController extends BaseController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    private function getFlowByTaskId($taskId)
+    {
+        $task = Flow::getTaskById($taskId);
+        return $this->getFlow($task->flow_id);
     }
 
     private function getFlow($flowId)

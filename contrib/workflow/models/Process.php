@@ -15,6 +15,7 @@ use Yii;
  * @property int $created_by
  * @property string $created_at
  * @property bool $completed
+ * @property string $finished_at
  */
 class Process extends \yii\db\ActiveRecord
 {
@@ -35,7 +36,7 @@ class Process extends \yii\db\ActiveRecord
             [['flow_id'], 'required'],
             [['flow_id', 'ref_id', 'status', 'created_by'], 'default', 'value' => null],
             [['flow_id', 'ref_id', 'status', 'created_by'], 'integer'],
-            [['created_at'], 'safe'],
+            [['created_at', 'finished_at'], 'safe'],
             [['completed'], 'boolean'],
             [['ref_type'], 'string', 'max' => 255],
         ];
@@ -55,6 +56,11 @@ class Process extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'created_at' => 'Created At',
             'completed' => 'Completed',
+            'finished_at' => 'Finished At',
         ];
+    }
+    public function getFlowDefinition()
+    {
+        return $this->hasOne(FlowDefinition::className(), ['id' => 'flow_id']);
     }
 }

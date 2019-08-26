@@ -17,6 +17,8 @@ use Yii;
  * @property string $node_code
  * @property string $group
  * @property string $permission
+ * @property string $view
+ * @property int $flow_id
  */
 class Task extends \yii\db\ActiveRecord
 {
@@ -35,11 +37,11 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             [['process_id'], 'required'],
-            [['process_id', 'assignee'], 'default', 'value' => null],
-            [['process_id', 'assignee'], 'integer'],
+            [['process_id', 'assignee', 'flow_id'], 'default', 'value' => null],
+            [['process_id', 'assignee', 'flow_id'], 'integer'],
             [['completed'], 'boolean'],
             [['created_at', 'finished_at'], 'safe'],
-            [['name', 'node_code', 'group', 'permission'], 'string', 'max' => 255],
+            [['name', 'node_code', 'group', 'permission', 'view'], 'string', 'max' => 255],
         ];
     }
 
@@ -59,6 +61,8 @@ class Task extends \yii\db\ActiveRecord
             'node_code' => 'Node Code',
             'group' => 'Group',
             'permission' => 'Permission',
+            'view' => 'View',
+            'flow_id' => 'Flow ID',
         ];
     }
 }

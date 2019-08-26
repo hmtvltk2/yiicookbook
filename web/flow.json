@@ -1,10 +1,10 @@
 [
     {
         "code": "start",
-        "name": "Task 1",
+        "name": "",
         "type": "start",
         "condition": "",
-        "view": "customer/start-view",
+        "view": "",
         "nexts": [
             "n1"
         ]
@@ -14,7 +14,7 @@
         "name": "task2",
         "type": "task",
         "condition": "",
-        "view": "view_task_n1",
+        "view": "customer/view-task1",
         "nexts": [
             "n2"
         ],
@@ -23,7 +23,7 @@
     {
         "code": "n2",
         "type": "exclusive",
-        "condition": "condition_n2",
+        "condition": "\\appname\\services\\ConditionService::conditionN1",
         "view": "",
         "nexts": [
             "n3",
@@ -35,12 +35,12 @@
         "name": "Task 3",
         "type": "task",
         "condition": "",
-        "view": "view_task_n3",
+        "view": "customer/view-task1",
         "nexts": [
             "n2"
         ],
         "prevConditionResult": false,
-        "assignee": "user",
+        "assignType": "user",
         "assignValue": "1"
     },
     {
@@ -48,13 +48,13 @@
         "name": "Task 4",
         "type": "task",
         "condition": "",
-        "view": "view_task_n4",
+        "view": "customer/view-task1",
         "nexts": [
             "n5"
         ],
         "prevConditionResult": true,
         "assignType": "group",
-        "assignValue": "1"
+        "assignValue": "group-admin"
     },
     {
         "code": "n5",
@@ -65,6 +65,9 @@
             "n6",
             "n7",
             "n8"
+        ],
+        "previous": [
+            "n4"
         ]
     },
     {
@@ -72,7 +75,7 @@
         "name": "Task 5",
         "type": "task",
         "condition": "",
-        "view": "view_task_n6",
+        "view": "customer/view-task1",
         "nexts": [
             "n9"
         ],
@@ -84,30 +87,33 @@
         "name": "Task 6",
         "type": "task",
         "condition": "",
-        "view": "view_task_n7",
+        "view": "customer/view-task1",
         "nexts": [
             "n10"
-        ]
+        ],
+        "assignType": "owner"
     },
     {
         "code": "n8",
         "name": "Task 7",
         "type": "task",
         "condition": "",
-        "view": "view_task_n8",
+        "view": "customer/view-task1",
         "nexts": [
             "n10"
-        ]
+        ],
+        "assignType": "owner"
     },
     {
         "code": "n9",
         "type": "task",
         "name": "Task 8",
         "condition": "",
-        "view": "view_task_n9",
+        "view": "customer/view-task1",
         "nexts": [
             "n10"
-        ]
+        ],
+        "assignType": "owner"
     },
     {
         "code": "n10",
@@ -116,14 +122,21 @@
         "view": "",
         "nexts": [
             "n11"
-        ]
+        ],
+        "previous": [
+            "n9",
+            "n7",
+            "n8"
+        ],
+        "assignType": "owner"
     },
     {
         "code": "n11",
         "name": "Task 9",
         "type": "task",
         "condition": "",
-        "view": "view_task_n11",
-        "nexts": []
+        "view": "customer/view-task1",
+        "nexts": [],
+        "assignType": "owner"
     }
 ]

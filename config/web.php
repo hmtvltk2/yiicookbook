@@ -159,13 +159,13 @@ $config = [
     //TODO: Change default route
     'defaultRoute' => 'appname/site/index',
     'params' => $params,
-    'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
-        'allowActions' => [
-            'appname/site/*',
-            'admin/*',
-        ]
-    ]
+    // 'as access' => [
+    //     'class' => 'mdm\admin\components\AccessControl',
+    //     'allowActions' => [
+    //         'appname/site/*',
+    //         'admin/*',
+    //     ]
+    // ]
 ];
 
 if (YII_ENV_DEV) {
