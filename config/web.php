@@ -131,8 +131,8 @@ $config = [
         'view' =>  [
             'theme' => [
                 'pathMap' => [
-                    '@mdm/admin/views' => '@mdm/admin/themes/metronic',
-                    '@mdm/admin/views' => [
+                    '@contrib/admin/views' => '@contrib/admin/themes/metronic',
+                    '@contrib/admin/views' => [
                         '@main/themes/custom',
                     ],
                 ],
