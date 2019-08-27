@@ -342,7 +342,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "mdm\\admin\\": ""
+                    "contrib\\admin\\": ""
                 }
             },
             "license": [

@@ -23,7 +23,7 @@
     {
         "code": "n2",
         "type": "exclusive",
-        "condition": "\\appname\\services\\ConditionService::conditionN1",
+        "condition": "\\main\\services\\ConditionService::conditionN1",
         "view": "",
         "nexts": [
             "n3",

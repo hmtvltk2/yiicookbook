@@ -11,21 +11,21 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
         '@contrib' => '@app/contrib',
-        '@appname' => '@app/appname',
+        '@main' => '@app/main',
     ],
     'timeZone' => 'Asia/Ho_Chi_Minh',
     'modules' => [
-        'appname' => 'appname\Module',
+        'main' => 'main\Module',
         'contrib' => 'contrib\Module',
         'gridview' => '\kartik\grid\Module',
         'datecontrol' => '\kartik\datecontrol\Module',
         'admin' =>  [
-            'class' => 'mdm\admin\Module',
+            'class' => 'contrib\admin\Module',
             'layout' => '@app/layout/main',
             'controllerMap' => [
                 'assignment' => [
-                    'class' => 'mdm\admin\controllers\AssignmentController',
-                    // 'userClassName' => 'appname\models\UserModel',
+                    'class' => 'contrib\admin\controllers\AssignmentController',
+                    // 'userClassName' => 'main\models\UserModel',
                     'idField' => 'id',
                     'usernameField' => 'username',
                     // 'fullnameField' => 'profile.full_name',
@@ -91,7 +91,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'appname\models\User',
+            'identityClass' => 'main\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => 'admin/user/login'
         ],
@@ -109,7 +109,7 @@ $config = [
         ],
         'errorHandler' => [
             //TODO: Change errorAction
-            'errorAction' => 'appname/site/error',
+            'errorAction' => 'main/site/error',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -138,7 +138,7 @@ $config = [
                 'pathMap' => [
                     '@mdm/admin/views' => '@mdm/admin/themes/metronic',
                     '@mdm/admin/views' => [
-                        '@appname/themes/custom',
+                        '@main/themes/custom',
                     ],
                 ],
             ],
@@ -157,15 +157,28 @@ $config = [
 
     ],
     //TODO: Change default route
-    'defaultRoute' => 'appname/site/index',
+    'defaultRoute' => 'main/site/index',
     'params' => $params,
     // 'as access' => [
-    //     'class' => 'mdm\admin\components\AccessControl',
+    //     'class' => 'contrib\admin\components\AccessControl',
     //     'allowActions' => [
-    //         'appname/site/*',
+    //         'main/site/*',
     //         'admin/*',
     //     ]
-    // ]
+    // ],
+    'as beforeRequest' => [
+        'class' => 'yii\filters\AccessControl',
+        'rules' => [
+            [
+                'allow' => true,
+                'actions' => ['login', 'test'],
+            ],
+            [
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+        ]
+    ],
 ];
 
 if (YII_ENV_DEV) {
