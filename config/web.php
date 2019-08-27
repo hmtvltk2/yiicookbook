@@ -116,20 +116,15 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error'],
+                    'levels' => ['error', 'warning'],
                     'logVars' => ['_GET', '_POST'],
                     'logFile' => '@runtime/logs/' . date('Y') . '/' . date('m') . '/' . date('d') . '/error.log'
-                ],
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning', 'info'],
-                    'logFile' => '@runtime/logs/' . date('Y') . '/' . date('m') . '/' . date('d') . '/all.log'
                 ],
                 [
                     'class' => 'yii\log\DbTarget',
                     'levels' => ['info'],
                     'categories' => ['userWrite', 'userRead'],
-                    'logVars' => ['_GET', '_POST'],
+                    'logVars' => [],
                 ],
             ],
         ],
