@@ -10,10 +10,10 @@ use yii\helpers\Url;
                 <i class="kt-font-brand flaticon2-line-chart"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                Danh sách process
+                Danh sách customer
             </h3>
         </div>
-        <!-- <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
                     <?= $this->render('@app/layout/partials/_export-menu') ?>
@@ -27,7 +27,7 @@ use yii\helpers\Url;
                     <div id="buttons"></div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <div class="kt-portlet__body">
@@ -35,30 +35,23 @@ use yii\helpers\Url;
             <thead>
                 <tr>
                     <th> ID</th>
-                    <th>Process name</th>
+                    <th>Task name</th>
+                    <th>Assignee</th>
                     <th>Created at</th>
-                    <th>Created by</th>
                     <th>Finished at</th>
-                    <!-- <th>Completed</th> -->
+
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($processes as $process) : ?>
+                <?php foreach ($tasks as $task) : ?>
                 <tr>
-                    <td><?= $process->id ?></td>
-                    <td><?= $process->flowDefinition->name ?></td>
-                    <td><?= $process->created_at ?></td>
-                    <td><?= $process->created_by ?></td>
-                    <td><?= $process->finished_at ?></td>
-                    <!-- <td><?= $process->completed ?></td> -->
+                    <td><?= $task->id ?></td>
+                    <td><?= $task->name ?></td>
+                    <td><?= $task->assigneeUser->full_name ?></td>
+                    <td><?= $task->created_at ?></td>
+                    <td><?= $task->finished_at ?></td>
 
 
-                    <td>
-                        <a href="<?= Url::to(['history', 'processId' => $process->id]) ?>" class="btn btn-brand btn-elevate btn-icon-sm">
-                            <i class="la la-plus"></i>
-                            History
-                        </a>
-                    </td>
                 </tr>
                 <?php endforeach ?>
             </tbody>

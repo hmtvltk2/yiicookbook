@@ -2,6 +2,7 @@
 
 namespace contrib\workflow\models;
 
+use appname\models\User;
 use Yii;
 
 /**
@@ -64,5 +65,15 @@ class Task extends \yii\db\ActiveRecord
             'view' => 'View',
             'flow_id' => 'Flow ID',
         ];
+    }
+
+    public function getProcess()
+    {
+        return $this->hasOne(Process::className(), ['id' => 'process_id']);
+    }
+
+    public function getAssigneeUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'assignee']);
     }
 }

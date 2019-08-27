@@ -17,7 +17,12 @@ class WorkflowService
 
     public static function getTaskOfUser($userId)
     {
-        return Flow::getTaskOfUserQuery($userId)->all();
+        return Flow::getTaskOfUserQuery($userId)->orderBy('created_at')->all();
+    }
+
+    public static function getTaskOfProcess($processId)
+    {
+        return Task::find()->with('assigneeUser')->where(['process_id' => $processId])->orderBy('id')->all();
     }
 
     public static function getProcesses()
@@ -25,6 +30,7 @@ class WorkflowService
         return Process::find()
             ->with('flowDefinition')
             ->andWhere(['status' => Constant::STATUS_ACTIVE])
+            ->orderBy('id')
             ->all();
     }
 

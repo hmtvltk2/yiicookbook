@@ -2,13 +2,16 @@
 
 namespace appname\services;
 
+use appname\models\Customer;
+use contrib\workflow\models\Flow;
+use contrib\workflow\models\Process;
+
 class ConditionService
 {
     public static function conditionN1($processId)
     {
-        // if ($processId) {
-        //     return false;
-        // }
-        return true;
+        $process = Flow::getProcessById($processId);
+        $customer = Customer::findOne(['id' => $process->ref_id]);
+        return strlen($customer->name) > 10;
     }
 }

@@ -76,7 +76,7 @@ class Flow
     }
 
 
-    public function completeTask($taskId, $userId)
+    public function completeTask($taskId, $userId, $refId)
     {
         // complete task
         $task = $this->getTaskById($taskId);
@@ -85,9 +85,19 @@ class Flow
         $task->finished_at = Helper::now();
         $task->save();
 
-        Yii::info($task->node_code);
-        // create next task
+        $this->setProcessRefId($task->process, $refId);
+
         $currentNode = $this->nodes[$task->node_code];
+        // Nếu không còn task nào nữa thì process hoàn thành
+        if (count($currentNode->nexts) == 0) {
+            $task->process->completed = true;
+            $task->process->finished_at = Helper::now();
+            if (!$task->process->save()) {
+                Yii::error("Lưu không thành công process #{$task->process->id}");
+            }
+        }
+
+        // create next task
         $this->next($currentNode, $task->process_id);
     }
 
@@ -111,24 +121,10 @@ class Flow
                 $node->createTask($processId);
                 break;
             case Constant::EXCLUSIVE:
-                $result = call_user_func($node->condition, $processId);
-                Yii::info('exclusive:' . $node->condition . strval($result));
-
-                foreach ($node->nexts as $code) {
-                    Yii::info('nextnode:' . $code);
-                    $nextNode = $this->nodes[$code];
-                    if ($nextNode->prevConditionResult == $result) {
-                        $this->initTask($nextNode, $processId);
-                        break;
-                    }
-                }
+                $this->handleExclusive($node, $processId);
                 break;
             case Constant::PARALLEL:
-                // Kiểm tra tất cả task của các node trước hoàn thành thì execute node parallel
-                $previousTasks = Task::find()
-                    ->where(['node_code' => $node->previous, 'process_id' => $processId, 'completed' => true])
-                    ->count();
-
+                $this->handleParallel($node, $processId);
                 break;
             default:
                 break;
@@ -137,7 +133,17 @@ class Flow
 
     public static function getTaskById($id)
     {
-        if (($model = Task::findOne($id)) !== null) {
+        $model = Task::find()->where(['id' => $id])->with('process')->one();
+        if ($model !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public static function getProcessById($id)
+    {
+        $model = Process::find()->where(['id' => $id])->one();
+        if ($model !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
@@ -162,5 +168,43 @@ class Flow
             ->all();
 
         return ArrayHelper::getColumn($roles, 'item_name');
+    }
+
+    private function handleExclusive($node, $processId)
+    {
+        $result = call_user_func($node->condition, $processId);
+        Yii::info('exclusive:' . $node->condition . strval($result));
+
+        foreach ($node->nexts as $code) {
+            $nextNode = $this->nodes[$code];
+            if ($nextNode->prevConditionResult == $result) {
+                $this->initTask($nextNode, $processId);
+                return;
+            }
+        }
+    }
+
+    private function handleParallel($node, $processId)
+    {
+        // Kiểm tra tất cả task của các node trước hoàn thành thì execute node parallel
+        $completedTaskCount = Task::find()
+            ->where(['node_code' => $node->previous, 'process_id' => $processId, 'completed' => true])
+            ->count();
+        if ($completedTaskCount === count($node->previous)) {
+            foreach ($node->nexts as $code) {
+                $nextNode = $this->nodes[$code];
+                $this->initTask($nextNode, $processId);
+            }
+        }
+    }
+
+    private function setProcessRefId($process, $refId)
+    {
+        if (!$process) return;
+
+        if ($process->ref_id == null) {
+            $process->ref_id = $refId;
+            $process->save();
+        }
     }
 }

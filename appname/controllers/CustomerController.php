@@ -72,13 +72,19 @@ class CustomerController extends BaseController
 
     public function actionViewTask1($taskId)
     {
-        if (Yii::$app->request->isPost) {
+        $task = Flow::getTaskById($taskId);
+        if (isset($task->process->ref_id)) {
+            $model = $this->findModel($task->process->ref_id);
+        } else {
+            $model = new Customer();
+        }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $flow = $this->getFlowByTaskId($taskId);
-            $flow->completeTask($taskId, Yii::$app->user->id);
+            $flow->completeTask($taskId, Yii::$app->user->id, $model->id);
             return $this->redirect(['workflow/tasks']);
         }
 
-        return $this->render('view-task1', compact('taskId'));
+        return $this->render('view-task1', compact('taskId', 'model'));
     }
 
     /**
@@ -104,8 +110,11 @@ class CustomerController extends BaseController
     {
         $model = new Customer();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->created_by = Yii::$app->user->id;
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -125,6 +134,8 @@ class CustomerController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->user->full_name = 'Test fullname';
+            $model->user->save();
             $this->logUserWrite("Cập nhật thông tin khách hàng #$id");
             return $this->redirect(['view', 'id' => $model->id]);
         }

@@ -59,4 +59,9 @@ class Customer extends ActiveRecord
             'address' => 'Địa chỉ',
         ];
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
 }

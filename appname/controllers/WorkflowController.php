@@ -66,6 +66,12 @@ class WorkflowController extends BaseController
         return $this->render('processes', compact('processes'));
     }
 
+    public function actionHistory($processId)
+    {
+        $tasks = WorkflowService::getTaskOfProcess($processId);
+        return $this->render('history', compact('tasks'));
+    }
+
     public function actionExecuteTask($taskId)
     {
         $task = Task::findOne(['id' => $taskId]);
