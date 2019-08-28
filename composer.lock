@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "377cf432a9671f1175ad7f7a7695e8ea",
+    "content-hash": "89657beb9f0fb50dfe8e39a50b5c3a8c",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -313,61 +313,6 @@
             "time": "2019-07-14T18:58:38+00:00"
         },
         {
-            "name": "hmtvltk2/yii2-admin",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "F:\\Yii2\\yii2-admin",
-                "reference": "c695c4008a667752d1fca87e1c3c55cc24d87929"
-            },
-            "require": {
-                "yiisoft/yii2": "~2.0.7"
-            },
-            "require-dev": {
-                "yiisoft/yii2-codeception": "~2.0"
-            },
-            "suggest": {
-                "yiisoft/yii2-bootstrap": "Used when using layout 'left-menu', 'right-menu' or 'top-menu'"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.0.master": "1.0.x-dev",
-                    "dev-master": "2.x-dev"
-                },
-                "asset-installer-paths": {
-                    "npm-asset-library": "vendor/npm",
-                    "bower-asset-library": "vendor/bower"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "contrib\\admin\\": ""
-                }
-            },
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Misbahul Munir",
-                    "email": "misbahuldmunir@gmail.com"
-                }
-            ],
-            "description": "RBAC Auth manager for Yii2 ",
-            "keywords": [
-                "admin",
-                "auth",
-                "rbac",
-                "yii"
-            ],
-            "support": {
-                "issues": "https://github.com/mdmsoft/yii2-admin/issues",
-                "source": "https://github.com/mdmsoft/yii2-admin"
-            },
-            "time": "2019-08-22T01:27:20+00:00"
-        },
-        {
             "name": "swiftmailer/swiftmailer",
             "version": "dev-master",
             "source": {
@@ -670,12 +615,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "b0150e72ae638a31713a9d0dc68a802f36094f60"
+                "reference": "06cc18449024112237eb1e251a98983a380a8b7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/b0150e72ae638a31713a9d0dc68a802f36094f60",
-                "reference": "b0150e72ae638a31713a9d0dc68a802f36094f60",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/06cc18449024112237eb1e251a98983a380a8b7e",
+                "reference": "06cc18449024112237eb1e251a98983a380a8b7e",
                 "shasum": ""
             },
             "require": {
@@ -762,7 +707,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-08-21T08:56:20+00:00"
+            "time": "2019-08-27T18:05:48+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -1085,9 +1030,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "hmtvltk2/yii2-admin": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
